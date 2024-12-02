@@ -1,0 +1,139 @@
+/* Container to ensure the extension is on top */
+#lanki-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999; /* High z-index to ensure it overlays everything */
+}
+
+/* Override difficulty badge colors to ensure consistency */
+#lanki-root .difficulty-badge.easy {
+  background-color: #d1fae5 !important; /* bg-green-100 */
+  color: #047857 !important; /* text-green-700 */
+}
+
+#lanki-root .difficulty-badge.medium {
+  background-color: #fef3c7 !important; /* bg-yellow-100 */
+  color: #b45309 !important; /* text-yellow-700 */
+}
+
+#lanki-root .difficulty-badge.hard {
+  background-color: #fee2e2 !important; /* bg-red-100 */
+  color: #b91c1c !important; /* text-red-700 */
+}
+
+/* Ensure background and text colors for selected difficulty buttons */
+#lanki-root button.selected-easy {
+  background-color: #10b981 !important; /* green-500 */
+  color: white !important;
+}
+
+#lanki-root button.selected-medium {
+  background-color: #fbbf24 !important; /* yellow-500 */
+  color: white !important;
+}
+
+#lanki-root button.selected-hard {
+  background-color: #ef4444 !important; /* red-500 */
+  color: white !important;
+}
+
+#lanki-root button.not-selected-easy {
+  background-color: #f0fdf4 !important; /* bg-green-50 */
+  color: #16a34a !important; /* text-green-600 */
+}
+
+#lanki-root button.not-selected-easy:hover {
+  background-color: #dcfce7 !important; /* hover:bg-green-100 */
+}
+
+#lanki-root button.not-selected-medium {
+  background-color: #fef9c3 !important; /* bg-yellow-50 */
+  color: #ca8a04 !important; /* text-yellow-600 */
+}
+
+#lanki-root button.not-selected-medium:hover {
+  background-color: #fef08a !important; /* hover:bg-yellow-100 */
+}
+
+#lanki-root button.not-selected-hard {
+  background-color: #fef2f2 !important; /* bg-red-50 */
+  color: #dc2626 !important; /* text-red-600 */
+}
+
+#lanki-root button.not-selected-hard:hover {
+  background-color: #fecaca !important; /* hover:bg-red-100 */
+}
+
+/* Maintain the background color of the selected disabled button */
+#lanki-root button.selected-easy:disabled {
+  background-color: #10b981 !important; /* green-500 */
+  color: white !important;
+}
+
+#lanki-root button.selected-medium:disabled {
+  background-color: #fbbf24 !important; /* yellow-500 */
+  color: white !important;
+}
+
+#lanki-root button.selected-hard:disabled {
+  background-color: #ef4444 !important; /* red-500 */
+  color: white !important;
+}
+
+/* General headings styling as per your example */
+#lanki-root h1,
+#lanki-root h2,
+#lanki-root h3,
+#lanki-root h4,
+#lanki-root h5,
+#lanki-root h6 {
+  color: black !important;
+  --tw-text-opacity: 1 !important;
+}
+
+/* Ensure hover background color for problem boxes */
+#lanki-root .problem-box {
+  border: 1px solid #f3f4f6 !important; /* Default border color (gray-100) */
+}
+
+#lanki-root .current-problem-box {
+  border: 1px solid #f3f4f6 !important; /* Default border color (gray-100) */
+}
+
+/* Ensure hover background color for problem boxes */
+#lanki-root .problem-box:hover {
+  background-color: #f9fafb !important; /* gray-50 */
+}
+
+/* Preserve other hover effects */
+#lanki-root .problem-box:hover .chevron {
+  color: #3f51b5 !important; /* emerald-500 */
+}
+
+#lanki-root .problem-box:hover {
+  border-color: #3f51b5 !important; /* emerald-200 */
+}
+
+/* Disabled button styles */
+#lanki-root button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Styles for the "Try this problem again" button */
+#lanki-root .try-again-button {
+  margin-top: 16px;
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  background-color: #3b82f6 !important; /* blue-500 */
+  color: white !important;
+  transition: all 0.2s;
+}
+
+#lanki-root .try-again-button:hover {
+  background-color: #2563eb !important; /* blue-600 */
+}

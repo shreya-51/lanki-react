@@ -1,0 +1,32 @@
+[✅] auth
+[✅] pull dynamic data
+    [✅] fix light/dark mode visibility
+    [✅] fix difficulty buttons
+    [✅] populate problem difficulty
+    [✅] click to go to new problem
+    [✅] fix light/dark for difficulty labels
+    [✅] fix background transparent problem (toolbar, light mode for bg)
+    [✅] fix outline changing color between dark/light mode
+[✅] send dynamic data
+    [✅] can't click on anything on the page
+    [✅] refresh problem title when url changes
+    [✅] gray out other buttons + try again button
+    [✅] current problem shouldn't be in upcoming problems list
+    [✅] add loading while loading problems
+[✅] feedback when pressing button
+[✅] add a minimize
+[✅] add discord link
+[✅] adding new users
+[✅] re-pull problems when url changes
+
+[✅] submit to store
+[] check functionality in store
+
+
+
+later:
+[] ui when problem name is long (ex. Longest Palindromic Substring)
+
+features:
+[] filter by difficulty only
+[] filter by topic only

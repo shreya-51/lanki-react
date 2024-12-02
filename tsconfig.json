@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "ES5",
+      "module": "ESNext",
+      "jsx": "react-jsx",
+      "strict": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,
+      "types": ["chrome"]
+    },
+    "include": ["src/**/*"]
+  }

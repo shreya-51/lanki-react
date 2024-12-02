@@ -1,0 +1,27 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Build output
+public/bundle.js
+public/*.bundle.js
+public/*.map
+
+# Production build output
+dist/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# MacOS files
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
