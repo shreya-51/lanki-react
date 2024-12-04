@@ -10,7 +10,7 @@ import { CurrentProblem } from './CurrentProblem';
 import { DifficultyRating } from './DifficultyRatings';
 
 // Imported functions
-import { get_current_problem } from '../utils/helpers';
+import { fetchProblemDifficulty, get_current_problem } from '../utils/helpers';
 import { getNextProblemsForReview, handleButtonClick, normalizeProblemUrl } from '../utils/database';
 
 // Imported definitions
@@ -25,17 +25,21 @@ const Lanki: React.FC = () => {
     const [userDifficulty, setUserDifficulty] = useState<Difficulty | null>(null);
     const [isLoadingProblems, setIsLoadingProblems] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
+    const [problemDifficulty, setProblemDifficulty] = useState<Difficulty | null>(null);
 
     useEffect(() => {
         let lastUrl = window.location.href;
 
-        const observer = new MutationObserver(() => {
+        const observer = new MutationObserver(async () => {
             const currentUrl = window.location.href;
             if (currentUrl !== lastUrl) {
                 lastUrl = currentUrl;
                 console.log('URL changed to', currentUrl);
                 const url = window.location.href;
                 const problemName = get_current_problem(url);
+                const difficulty = await fetchProblemDifficulty(url);
+                setProblemDifficulty(difficulty);
+                console.log("problem difficulty: ", difficulty)
                 if (problemName) {
                     if (problemName != "nothing") {
                         setProblemTitle(problemName);
@@ -77,6 +81,13 @@ const Lanki: React.FC = () => {
     useEffect(() => {
         const url = window.location.href;
         const problemName = get_current_problem(url);
+        const getProblemDifficulty = async () => {
+            const difficulty = await fetchProblemDifficulty(url);
+            setProblemDifficulty(difficulty);
+            console.log("problem difficulty: ", difficulty);
+        };
+        getProblemDifficulty();
+
         if (problemName) {
             if (problemName != "nothing") {
                 setProblemTitle(problemName);
@@ -166,7 +177,10 @@ const Lanki: React.FC = () => {
                         {userEmail ? (
                             <div className="p-[10px] border">
                                 <Logo logoUrl={logoUrl} />
-                                <CurrentProblem title={problemTitle} difficulty={"Easy"} />
+                                <CurrentProblem
+                                    title={problemTitle}
+                                    difficulty={problemDifficulty ?? "Unknown" as Difficulty}
+                                />
                                 <DifficultyRating
                                     selectedDifficulty={userDifficulty}
                                     onSelectDifficulty={handleDifficultyChange}
