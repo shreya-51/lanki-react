@@ -11,7 +11,8 @@ import { DifficultyRating } from './DifficultyRatings';
 
 // Imported functions
 import { fetchProblemDifficulty, get_current_problem } from '../utils/helpers';
-import { getNextProblemsForReview, handleButtonClick, normalizeProblemUrl } from '../utils/database';
+import { getNextProblemsForReview, handleButtonClick, normalizeProblemUrl, getUserId } from '../utils/database';
+import { logTryAgainButtonPress, logDifficultyButtonPress } from '../utils/events';
 
 // Imported definitions
 import { Problem, Difficulty } from '../utils/shared_interfaces';
@@ -20,6 +21,7 @@ import Logo from './Logo';
 const Lanki: React.FC = () => {
     const logoUrl = chrome.runtime.getURL('/logo.svg');
     const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [userId, setUserId] = useState<number | null>(null);
     const [problemTitle, setProblemTitle] = useState('');
     const [nextProblems, setNextProblems] = useState<Problem[]>([]);
     const [userDifficulty, setUserDifficulty] = useState<Difficulty | null>(null);
@@ -120,23 +122,35 @@ const Lanki: React.FC = () => {
         }
     }, [userEmail]);
 
-    const handleLoginSuccess = (email: string) => {
+    const handleLoginSuccess = async (email: string) => {
         setUserEmail(email);
+        const id = await getUserId(email);
+        if (id) {
+            setUserId(id);
+        } else {
+            console.error('Failed to get user ID');
+        }
     };
 
-    const handleDifficultyChange = (difficulty: Difficulty) => {
+    const handleDifficultyChange = async (difficulty: Difficulty) => {
         console.log("Selected difficulty:", difficulty);
         setUserDifficulty(difficulty);
-        if (userEmail) {
+        if (userEmail && userId) {
             handleButtonClick(difficulty, userEmail);
+            const currentUrl = window.location.href;
+            await logDifficultyButtonPress(userId, difficulty.toLowerCase() as 'easy' | 'medium' | 'hard', currentUrl);
         }
         else {
             throw new Error("problem.") // TODO: handle (should never hit this though)
         }
     };
 
-    const handleTryAgain = () => {
+    const handleTryAgain = async () => {
         setUserDifficulty(null);
+        if (userId) {
+            const currentUrl = window.location.href;
+            await logTryAgainButtonPress(userId, currentUrl);
+        }
     };
 
     const handleToggleMinimize = () => {
@@ -185,8 +199,9 @@ const Lanki: React.FC = () => {
                                     selectedDifficulty={userDifficulty}
                                     onSelectDifficulty={handleDifficultyChange}
                                     onTryAgain={handleTryAgain}
+                                    userId={userId!}
                                 />
-                                <UpcomingProblems problems={nextProblems} isLoading={isLoadingProblems} />
+                                <UpcomingProblems problems={nextProblems} isLoading={isLoadingProblems} userId={userId} />
                             </div>
                         ) : (
                             <div className="p-[10px]">

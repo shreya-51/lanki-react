@@ -1,5 +1,6 @@
 import { ChevronRight } from 'lucide-react';
 import { Difficulty } from '../utils/shared_interfaces';
+import { logUpcomingProblemButtonPress } from '../utils/events';
 
 interface Problem {
     name: string;
@@ -10,9 +11,10 @@ interface Problem {
 interface UpcomingProblemsProps {
     problems: Problem[];
     isLoading: boolean;
+    userId: number | null;
 }
 
-export function UpcomingProblems({ problems, isLoading }: UpcomingProblemsProps) {
+export function UpcomingProblems({ problems, isLoading, userId }: UpcomingProblemsProps) {
     return (
         <div>
             <h2 className="text-sm font-medium text-gray-700 mb-3">Upcoming Problems</h2>
@@ -32,10 +34,15 @@ export function UpcomingProblems({ problems, isLoading }: UpcomingProblemsProps)
                         </div>
                     ))
                 ) : (
-                    problems.map((problem) => (
+                    problems.map((problem, index) => (
                         <div
                             key={problem.url}
-                            onClick={() => window.location.href = problem.url}
+                            onClick={async () => {
+                                if (userId) {
+                                    await logUpcomingProblemButtonPress(userId, index + 1);
+                                }
+                                window.location.href = problem.url;
+                            }}
                             className="problem-box flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 hover:border-emerald-200 hover:bg-gray-50 transition-colors cursor-pointer group"
                         >
                             <div className="flex items-center space-x-3">

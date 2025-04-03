@@ -6,18 +6,24 @@ interface DifficultyRatingProps {
   selectedDifficulty: Difficulty | null;
   onSelectDifficulty: (difficulty: Difficulty) => void;
   onTryAgain: () => void;
+  userId: number;
 }
 
 export function DifficultyRating({
   selectedDifficulty,
   onSelectDifficulty,
   onTryAgain,
+  userId,
 }: DifficultyRatingProps) {
   const difficulties: Difficulty[] = ['Easy', 'Medium', 'Hard'];
 
   // Disable all buttons when a difficulty is selected
   const isButtonDisabled = () => {
     return selectedDifficulty !== null;
+  };
+
+  const handleDifficultySelect = (difficulty: Difficulty) => {
+    onSelectDifficulty(difficulty);
   };
 
   const getButtonStyles = (difficulty: Difficulty) => {
@@ -54,7 +60,7 @@ export function DifficultyRating({
         {difficulties.map((difficulty) => (
           <button
             key={difficulty}
-            onClick={() => onSelectDifficulty(difficulty)}
+            onClick={() => handleDifficultySelect(difficulty)}
             className={getButtonStyles(difficulty)}
             disabled={isButtonDisabled()}
           >
